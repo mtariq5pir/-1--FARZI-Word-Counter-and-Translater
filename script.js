@@ -214,8 +214,17 @@ document.getElementById('btn-like').addEventListener('click', () => {
     likes++; document.getElementById('like-count').textContent = likes;
     localStorage.setItem('f_l', likes); localStorage.setItem('f_voted', true);
 });
+// ڈس لائک کا صحیح اور مکمل کوڈ
 document.getElementById('btn-dislike').addEventListener('click', () => {
     if(localStorage.getItem('f_voted')) return alert("آپ پہلے ہی ووٹ دے چکے ہیں!");
-    dislikes++; document.getElementById('dislike-count').textContent = dislikes;
-    localStorage.setItem('f_d', dislikes); localStorage.setItem('f_voted', true);
+    dislikes++; 
+    document.getElementById('dislike-count').textContent = dislikes;
+    localStorage.setItem('f_d', dislikes); 
+    localStorage.setItem('f_voted', true);
+});
+
+// فارم سبمٹ ہونے پر لائکس بھیجنے کا کوڈ
+document.getElementById('feedback-form').addEventListener('submit', function() {
+    document.getElementById('hidden-likes').value = localStorage.getItem('f_l') || 0;
+    document.getElementById('hidden-dislikes').value = localStorage.getItem('f_d') || 0;
 });
