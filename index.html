@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FARZI Word Counter and Translater | Ultimate Text Analyzer & Translator</title>
+    <link rel="icon" type="image/x-icon" href="icons/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400..700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="header-top">
+                <div class="logo">
+                    <img src="icons/favicon.ico" alt="Logo" class="logo-icon"></span> FARZI Word Counter and Translater <span class="logo-sub">Studio</span>
+                </div>
+                <button id="dark-mode-toggle" class="mode-btn">🌙</button>
+            </div>
+            <p class="subtitle">Urdu • Arabic • Pashto • English Professional Analyzer</p>
+            
+            <div class="lang-switcher">
+                <button id="btn-ur-ar" class="active" onclick="setDirection('rtl')">اردو / پښتو/ عربي </button>
+                <button id="btn-en" onclick="setDirection('ltr')">English</button>
+            </div>
+        </header>
+
+        <main>
+            <div class="upload-container" id="drop-zone">
+                <p>📄 فائل یہاں ڈریگ کریں یا اپلوڈ کرنے کے لیے کلک کریں (TXT, DOCX, PDF)</p>
+                <input type="file" id="file-picker" accept=".txt,.docx,.pdf" style="display:none;">
+            </div>
+
+            <div class="textarea-container">
+                <textarea id="text-input" placeholder="یہاں اپنا متن لکھیں یا اوپر فائل اپلوڈ کریں... / Write your text here..."></textarea>
+            </div>
+
+            <div class="action-bar">
+                <div class="control-buttons">
+                    <button id="btn-copy" class="btn btn-success">📋 Copy Text</button>
+                    <button id="btn-clear" class="btn btn-danger">🗑️ Clear</button>
+                </div>
+                
+                <div class="feedback-buttons">
+                    <button id="btn-like" class="reaction-btn">👍 <span id="like-count">0</span></button>
+                    <button id="btn-dislike" class="reaction-btn">👎 <span id="dislike-count">0</span></button>
+                </div>
+            </div>
+
+            <div class="download-section">
+                <span>💾 رپورٹ ڈاؤن لوڈ کریں:</span>
+                <button onclick="downloadAs('txt')" class="btn-download">TXT</button>
+                <button onclick="downloadAs('csv')" class="btn-download">CSV</button>
+                <button onclick="window.print()" class="btn-download">PDF / Print</button>
+            </div>
+<!-- پرانے گوگل ٹرانسلیٹر باکس کی جگہ یہ نیا کوڈ لگا دیں -->
+<section class="translation-box">
+    <h3>🌍 پرو ٹرانسلیٹر (FARZI Universal Translator)</h3>
+    <p class="box-desc">متن کا ترجمہ کرنے کے لیے نیچے سے زبان منتخب کریں (علاقائی زبانیں سب سے اوپر ہیں):</p>
+    
+    <!-- کسٹم بڑا اور واضح سلیکٹر -->
+    <div class="custom-translate-wrapper">
+        <select id="custom-lang-selector" onchange="triggerGoogleTranslate(this.value)">
+            <option value="">زبان منتخب کریں (Select Language)...</option>
+            
+            <!-- ہمارے خطے کی ترجیحی زبانیں (Top Priority) -->
+            <optgroup label="⭐ ترجیحی زبانیں (Priority Languages)">
+                <option value="ur">اردو (Urdu)</option>
+                <option value="ps">پښتو (Pashto)</option>
+                <option value="ar">العربية (Arabic)</option>
+                <option value="pa">پنجابی (Punjabi)</option>
+                <option value="sd">سندھی (Sindhi)</option>
+                <option value="skr">سرائیکی (Saraiki)</option> <!-- Note: If Google fully supports, else defaults to Urdu fallback -->
+                <option value="bal">بلوچی (Balochi)</option>
+                <option value="en">English</option>
+            </optgroup>
+
+            <!-- دنیا کی باقی تمام زبانیں (All Other Google Languages) -->
+            <optgroup label="🌐 دیگر تمام زبانیں (All Other Languages)">
+                <option value="hi">हिन्दी (Hindi)</option>
+                <option value="fa">فارسی (Persian)</option>
+                <option value="tr">Türkçe (Turkish)</option>
+                <option value="es">Español (Spanish)</option>
+                <option value="fr">Français (French)</option>
+                <option value="de">Deutsch (German)</option>
+                <option value="zh-CN">简体中文 (Chinese Simplified)</option>
+                <option value="ru">Русский (Russian)</option>
+                <option value="ja">日本語 (Japanese)</option>
+                <option value="bn">বাংলা (Bengali)</option>
+                <option value="tr">Türkçe (Turkish)</option>
+                <option value="it">Italiano (Italian)</option>
+                <option value="pt">Português (Portuguese)</option>
+                <option value="id">Bahasa Indonesia (Indonesian)</option>
+                <option value="ms">Bahasa Melayu (Malay)</option>
+                <option value="ta">தமிழ் (Tamil)</option>
+                <option value="te">తెలుగు (Telugu)</option>
+                <option value="th">ไทย (Thai)</option>
+                <option value="vi">Tiếng Việt (Vietnamese)</option>
+                <option value="ko">한국어 (Korean)</option>
+            </optgroup>
+        </select>
+    </div>
+
+    <!-- یہ اصل گوگل ویجیٹ ہے جسے ہم CSS کے ذریعے چھپا دیں گے لیکن یہ بیک اینڈ پر کام کرے گا -->
+    <div id="google_translate_element" style="display:none;"></div>
+</section>
+            <section class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-title">📝 Words (الفاظ)</span>
+                    <span id="stat-words" class="stat-value">0</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-title">🔤 Characters (حروف)</span>
+                    <span id="stat-chars" class="stat-value">0</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-title">🚫 Chars (No Space)</span>
+                    <span id="stat-chars-no-space" class="stat-value">0</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-title">📄 Sentences (جملے)</span>
+                    <span id="stat-sentences" class="stat-value">0</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-title">🗂️ Paragraphs (پیراگراف)</span>
+                    <span id="stat-paragraphs" class="stat-value">0</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-title">📖 Reading Time</span>
+                    <span id="stat-reading" class="stat-value">0m 0s</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-title">🎤 Speaking Time</span>
+                    <span id="stat-speaking" class="stat-value">0m 0s</span>
+                </div>
+            </section>
+
+            <section class="analysis-section">
+                <div class="top-words-box">
+                    <h3>📊 ٹاپ الفاظ (Top Words)</h3>
+                    <ul id="top-words-list">
+                        <li class="empty-list">متن لکھیں تاکہ بار بار آنے والے الفاظ یہاں نظر آئیں۔</li>
+                    </ul>
+                </div>
+
+                <div class="chart-box">
+                    <h3>📈 گرافک تجزیہ (Visual Analysis)</h3>
+                    <div id="piechart_3d" style="width: 100%; height: 250px;"></div>
+                </div>
+            </section>
+
+            <hr class="section-divider">
+
+            <section class="user-feedback-form">
+                <h3>اپنی رائے دیں (Give Your Feedback)</h3>
+                <p>اس ایپ کو مزید بہتر بنانے کے لیے اپنی قیمتی رائے یا تبدیلجات یہاں لکھیں:</p>
+                <form action="https://formspree.io/f/your_form_id_here" method="POST" id="feedback-form">
+                    <div class="form-group"><input type="text" name="name" placeholder="آپ کا نام (Name)" required></div>
+                    <div class="form-group"><input type="email" name="email" placeholder="آپ کا ای میل (Email)" required></div>
+                    <div class="form-group"><textarea name="message" class="feedback-textarea" placeholder="اپنی رائے یا تجویز یہاں لکھیں..." required></textarea></div>
+                    <button type="submit" class="btn btn-primary">رائے بھیجیں (Submit Feedback)</button>
+                </form>
+            </section>
+        </main>
+
+        <footer>
+            <p>Made with ❤️ by <strong>Muhammad Tariq</strong></p>
+            <div class="footer-links">
+                <a href="https://github.com" target="_blank">GitHub Repository</a> • <span>Version 1.0</span>
+            </div>
+        </footer>
+    </div>
+
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'ur',
+                includedLanguages: 'ur,ar,ps,en',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script src="script.js"></script>
+</body>
+</html>
