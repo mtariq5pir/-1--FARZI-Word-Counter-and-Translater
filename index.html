@@ -58,12 +58,11 @@
                 <button onclick="window.print()" class="btn-download">PDF / Print</button>
             </div>
 
-            <!-- کسٹم سنگل لکیر والا گوگل ویجیٹ ٹرانسلیٹر -->
+            <!-- آپ کی فرمائش پر نیا سنگل لکیر والا ڈائریکٹ ٹرانسلیٹر مینیو -->
             <section class="translation-line-box">
                 <div class="translate-controls">
-                    <span>🌍 متن کا ترجمہ کریں (Translate Text):</span>
-                    <select id="direct-lang-selector" class="translate-select" onchange="triggerGoogleTranslate(this.value)">
-                        <option value="">زبان منتخب کریں (Select Language)...</option>
+                    <span>🌍 ترجمہ کریں (Translate To):</span>
+                    <select id="direct-lang-selector" class="translate-select">
                         <option value="ur">اردو (Urdu)</option>
                         <option value="en">English</option>
                         <option value="ar">العربية (Arabic)</option>
@@ -73,9 +72,10 @@
                         <option value="hi">हिन्दी (Hindi)</option>
                         <option value="fa">فارسی (Persian)</option>
                     </select>
+                    <button type="button" class="translate-btn" onclick="performDirectTranslate()">ترجمہ کریں (Translate)</button>
                 </div>
-                <!-- یہ بیک گراؤنڈ میں کام کرے گا مگر صارف کو نظر نہیں آئے گا -->
-                <div id="google_translate_element"></div>
+                <!-- یہ خانہ شروع میں چھپا رہے گا، کلک کرنے پر کھل کر ترجمہ دکھائے گا -->
+                <div id="translation-output" class="output-box"></div>
             </section>
 
             <section class="stats-grid">
@@ -125,6 +125,7 @@
 
             <hr class="section-divider">
 
+            <!-- فیڈبیک فارم آپ کی ایکٹو آئی ڈی کے ساتھ -->
             <section class="user-feedback-form">
                 <h3>اپنی رائے دیں (Give Your Feedback)</h3>
                 <p>اس ایپ کو مزید بہتر بنانے کے لیے اپنی قیمتی رائے یا تبدیلجات یہاں لکھیں:</p>
@@ -143,22 +144,11 @@
         <footer>
             <p>Made with ❤️ by <strong>Muhammad Tariq</strong></p>
             <div class="footer-links">
-                <a href="https://github.com" target="_blank">GitHub Repository</a> • <span>Version 1.2</span>
+                <a href="https://github.com" target="_blank">GitHub Repository</a> • <span>Version 1.0</span>
             </div>
         </footer>
     </div>
 
-    <!-- آفیشل گوگل اسکرپٹ لوڈر -->
-    <script type="text/javascript">
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({
-                pageLanguage: 'ur',
-                includedLanguages: 'ur,en,ar,ps,pa,sd,hi,fa',
-                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-            }, 'google_translate_element');
-        }
-    </script>
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <script src="script.js"></script>
 </body>
 </html>

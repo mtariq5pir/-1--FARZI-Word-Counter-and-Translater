@@ -215,3 +215,34 @@ document.getElementById('feedback-form').addEventListener('submit', function() {
     document.getElementById('hidden-likes').value = localStorage.getItem('f_l') || 0;
     document.getElementById('hidden-dislikes').value = localStorage.getItem('f_d') || 0;
 });
+
+// ڈائریکٹ فری گوگل ٹرانسلیشن اسکرپٹ
+async function performDirectTranslate() {
+    const text = document.getElementById('text-input').value;
+    const targetLang = document.getElementById('direct-lang-selector').value;
+    const outputBox = document.getElementById('translation-output');
+
+    if (!text.trim()) {
+        outputBox.style.display = "block";
+        outputBox.innerHTML = "<span style='color:red;'>براہ کرم ترجمہ کرنے کے لیے اوپر باکس میں کچھ متن لکھیں!</span>";
+        return;
+    }
+
+    outputBox.style.display = "block";
+    outputBox.innerText = "ترجمہ ہو رہا ہے، براہ کرم انتظار کریں...";
+
+    try {
+        const response = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`);
+        const data = await response.json();
+        
+        let translatedText = "";
+        data[0].forEach(sentence => {
+            if (sentence[0]) translatedText += sentence[0];
+        });
+
+        outputBox.innerText = translatedText;
+    } catch (error) {
+        outputBox.innerText = "معذرت، ترجمہ کرنے میں کچھ مسئلہ پیش آیا۔ دوبارہ کوشش کریں۔";
+        console.error(error);
+    }
+}
