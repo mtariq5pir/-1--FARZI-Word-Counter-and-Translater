@@ -156,30 +156,17 @@ function downloadAs(type) {
     link.click();
 }
 
-// اس فنکشن کو اپنے script.js میں نیچے کہیں بھی شامل کر لیں
-
+// 100% ورکنگ آفیشل گوگل ہک لاجک
 function triggerGoogleTranslate(langCode) {
     if (!langCode) return;
 
-    // گوگل ٹرانسلیٹ کے اندرونی سلیکٹر کو تلاش کرنا
     const googleSelect = document.querySelector('.goog-te-combo');
-    
     if (googleSelect) {
         googleSelect.value = langCode;
-        // گوگل کے ویجیٹ کو بتانا کہ زبان تبدیل ہو چکی ہے تاکہ وہ رینڈر کرے
         googleSelect.dispatchEvent(new Event('change'));
     } else {
-        alert("گوگل ٹرانسلیٹر ابھی لوڈ ہو رہا ہے، براہ کرم ایک سیکنڈ انتظار کر کے دوبارہ کوشش کریں۔");
+        alert("گوگل انجن بیک گراؤنڈ میں لوڈ ہو رہا ہے، ایک لمحہ رک کر دوبارہ منتخب کریں!");
     }
-}
-
-// گوگل ٹرانسلیٹ انیشلائزیشن کو اپڈیٹ کریں تاکہ یہ تمام زبانوں کو سپورٹ کرے
-function googleTranslateElementInit() {
-    new google.translate.TranslateElement({
-        pageLanguage: 'ur',
-        // یہاں آپ جتنی چاہیں زبانیں شامل کر سکتے ہیں، خالی چھوڑنے سے گوگل خودکار طور پر تمام زبانیں سپورٹ کر لیتا ہے
-        layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-    }, 'google_translate_element');
 }
 
 // Direction UI Switcher
@@ -214,7 +201,7 @@ document.getElementById('btn-like').addEventListener('click', () => {
     likes++; document.getElementById('like-count').textContent = likes;
     localStorage.setItem('f_l', likes); localStorage.setItem('f_voted', true);
 });
-// ڈس لائک کا صحیح اور مکمل کوڈ
+
 document.getElementById('btn-dislike').addEventListener('click', () => {
     if(localStorage.getItem('f_voted')) return alert("آپ پہلے ہی ووٹ دے چکے ہیں!");
     dislikes++; 

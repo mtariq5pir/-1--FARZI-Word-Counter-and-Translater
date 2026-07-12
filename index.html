@@ -17,7 +17,7 @@
         <header>
             <div class="header-top">
                 <div class="logo">
-                    <img src="icons/favicon.ico" alt="Logo" class="logo-icon"> FARZI Word Counter and Translater <span class="logo-sub">Studio</span>
+                    <img src="icons/favicon.ico" alt="Logo" class="logo-icon"> FARZI Word Counter and Translater 
                 </div>
                 <button id="dark-mode-toggle" class="mode-btn">🌙</button>
             </div>
@@ -58,51 +58,24 @@
                 <button onclick="window.print()" class="btn-download">PDF / Print</button>
             </div>
 
-            <!-- پرو ٹرانسلیٹر مینیو -->
-            <section class="translation-box">
-                <h3>🌍 پرو ٹرانسلیٹر (FARZI Universal Translator)</h3>
-                <p class="box-desc">متن کا ترجمہ کرنے کے لیے نیچے سے زبان منتخب کریں (علاقائی زبانیں سب سے اوپر ہیں):</p>
-                
-                <div class="custom-translate-wrapper">
-                    <select id="custom-lang-selector" onchange="triggerGoogleTranslate(this.value)">
+            <!-- کسٹم سنگل لکیر والا گوگل ویجیٹ ٹرانسلیٹر -->
+            <section class="translation-line-box">
+                <div class="translate-controls">
+                    <span>🌍 متن کا ترجمہ کریں (Translate Text):</span>
+                    <select id="direct-lang-selector" class="translate-select" onchange="triggerGoogleTranslate(this.value)">
                         <option value="">زبان منتخب کریں (Select Language)...</option>
-                        
-                        <optgroup label="⭐ ترجیحی زبانیں (Priority Languages)">
-                            <option value="ur">اردو (Urdu)</option>
-                            <option value="ps">پښتو (Pashto)</option>
-                            <option value="ar">العربية (Arabic)</option>
-                            <option value="pa">پنجابی (Punjabi)</option>
-                            <option value="sd">سندھی (Sindhi)</option>
-                            <option value="skr">سرائیکی (Saraiki)</option>
-                            <option value="bal">بلوچی (Balochi)</option>
-                            <option value="en">English</option>
-                        </optgroup>
-
-                        <optgroup label="🌐 دیگر تمام زبانیں (All Other Languages)">
-                            <option value="hi">हिन्दी (Hindi)</option>
-                            <option value="fa">فارسی (Persian)</option>
-                            <option value="tr">Türkçe (Turkish)</option>
-                            <option value="es">Español (Spanish)</option>
-                            <option value="fr">Français (French)</option>
-                            <option value="de">Deutsch (German)</option>
-                            <option value="zh-CN">简体中文 (Chinese Simplified)</option>
-                            <option value="ru">Русский (Russian)</option>
-                            <option value="ja">日本語 (Japanese)</option>
-                            <option value="bn">বাংলা (Bengali)</option>
-                            <option value="it">Italiano (Italian)</option>
-                            <option value="pt">Português (Portuguese)</option>
-                            <option value="id">Bahasa Indonesia (Indonesian)</option>
-                            <option value="ms">Bahasa Melayu (Malay)</option>
-                            <option value="ta">தமிழ் (Tamil)</option>
-                            <option value="te">తెలుగు (Telugu)</option>
-                            <option value="th">ไทย (Thai)</option>
-                            <option value="vi">Tiếng Việt (Vietnamese)</option>
-                            <option value="ko">한국어 (Korean)</option>
-                        </optgroup>
+                        <option value="ur">اردو (Urdu)</option>
+                        <option value="en">English</option>
+                        <option value="ar">العربية (Arabic)</option>
+                        <option value="ps">پښتو (Pashto)</option>
+                        <option value="pa">پنجابی (Punjabi)</option>
+                        <option value="sd">سندھی (Sindhi)</option>
+                        <option value="hi">हिन्दी (Hindi)</option>
+                        <option value="fa">فارسی (Persian)</option>
                     </select>
                 </div>
-
-                <div id="google_translate_element" style="display:none;"></div>
+                <!-- یہ بیک گراؤنڈ میں کام کرے گا مگر صارف کو نظر نہیں آئے گا -->
+                <div id="google_translate_element"></div>
             </section>
 
             <section class="stats-grid">
@@ -152,13 +125,10 @@
 
             <hr class="section-divider">
 
-            <!-- فیڈبیک فارم آپ کی ایکٹو آئی ڈی کے ساتھ -->
             <section class="user-feedback-form">
                 <h3>اپنی رائے دیں (Give Your Feedback)</h3>
                 <p>اس ایپ کو مزید بہتر بنانے کے لیے اپنی قیمتی رائے یا تبدیلجات یہاں لکھیں:</p>
                 <form action="https://formspree.io/f/xeebyyev" method="POST" id="feedback-form">
-                    
-                    <!-- یہ خفیہ خانے ڈیٹا اکٹھا کر کے ای میل پر بھیجیں گے -->
                     <input type="hidden" name="Total_Likes" id="hidden-likes" value="0">
                     <input type="hidden" name="Total_Dislikes" id="hidden-dislikes" value="0">
 
@@ -178,10 +148,12 @@
         </footer>
     </div>
 
+    <!-- آفیشل گوگل اسکرپٹ لوڈر -->
     <script type="text/javascript">
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({
-                pageLanguage: 'ur',
+                pageLanguage: 'auto',
+                includedLanguages: 'ur,en,ar,ps,pa,sd,hi,fa',
                 layout: google.translate.TranslateElement.InlineLayout.SIMPLE
             }, 'google_translate_element');
         }
